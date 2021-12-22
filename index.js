@@ -6,6 +6,7 @@ const authRouter = require("./routers/auth");
 const jobsRouter = require("./routers/jobs");
 const notFound = require("./middleware/not-found");
 const errorHandler = require("./middleware/error-handler");
+const authenticationMiddleware = require("./middleware/authentication");
 
 const PORT = process.env.PORT || 5500;
 
@@ -13,7 +14,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use("/api/v1/jobs", jobsRouter);
+app.use("/api/v1/jobs", authenticationMiddleware, jobsRouter);
 app.use("/api/v1/auth", authRouter);
 
 app.use(notFound);
